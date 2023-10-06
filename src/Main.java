@@ -12,13 +12,15 @@ public class Main {
             System.out.println("2. Remove Book");
             System.out.println("3. Register Member");
             System.out.println("4. Remove Member");
-            System.out.println("5. Lend Book");
-            System.out.println("6. Return Book");
-            System.out.println("7. Display Book Names");
-            System.out.println("8. Display Member Names");
-            System.out.println("9. View Lending Information");
-            System.out.println("10. Display Overdue Books");
-            System.out.println("11. Exit");
+            System.out.println("5. Search Book Details");
+            System.out.println("6. Search Member Details");
+            System.out.println("7. Lend Book");
+            System.out.println("8. Return Book");
+            System.out.println("9. Display Book Names");
+            System.out.println("10. Display Member Names");
+            System.out.println("11. View Lending Information");
+            System.out.println("12. Display Overdue Books");
+            System.out.println("13. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -54,28 +56,34 @@ public class Main {
                     library.removeMember(removeMemberId);
                     break;
                 case 5:
-                    library.lendBook();
+                    library.searchBookInformation();
                     break;
                 case 6:
+                    library.searchMemberInformation();
+                    break;
+                case 7:
+                    library.lendBook();
+                    break;
+                case 8:
                     System.out.print("Enter Book ID to return: ");
                     int returnBookId = scanner.nextInt();
                     System.out.print("Enter Member ID: ");
                     int returnMemberId = scanner.nextInt();
                     library.returnBook(returnBookId, returnMemberId);
                     break;
-                case 7:
+                case 9:
                     library.displayBookNames();
                     break;
-                case 8:
+                case 10:
                     library.displayMemberNames();
                     break;
-                case 9:
+                case 11:
                     library.viewLendingInformation();
                     break;
-                case 10:
+                case 12:
                     library.displayOverdueBooks();
                     break;
-                case 11:
+                case 13:
                     System.out.println("Exiting Library Management System.");
                     System.exit(0);
                 default:
