@@ -1,15 +1,19 @@
 public class Book {
+    //variables
     private int bookId;
     private String title;
     private String author;
     private boolean isAvailable;
 
+    //constructor
     public Book(int bookId, String title, String author) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.isAvailable = true;
     }
+
+    //getters
     public int getBookId() {
         return bookId;
     }
@@ -26,6 +30,8 @@ public class Book {
         return isAvailable;
     }
 
+
+    //setters
     public void setBookId(int bookId) {
         this.bookId = bookId;
     }

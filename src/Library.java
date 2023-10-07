@@ -6,6 +6,8 @@ public class Library {
     private Map<Integer, Member> members = new HashMap<>();
     private List<LendingRecord> lendingRecords = new ArrayList<>();
 
+    //------------------------------------------------------------------
+
     public void addBook(int bookId, String title, String author) {
     try {
         if (books.containsKey(bookId)) {
@@ -15,14 +17,13 @@ public class Library {
             throw new IllegalArgumentException("Title and author must not be empty.");
         }
         
-        // Add the book
         Book book = new Book(bookId, title, author);
         books.put(bookId, book);
         System.out.println("Book added Successfully.");
-    } catch (IllegalArgumentException e) {
-        System.err.println("Error: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
-}
 
 
     public void removeBook(int bookId) {
@@ -44,6 +45,7 @@ public class Library {
         }
     }
 
+
     public void removeMember(int memberId) {
         if (members.containsKey(memberId)) {
             members.remove(memberId);
@@ -52,6 +54,9 @@ public class Library {
             System.out.println("Member not found in the records.");
         }
     }
+
+
+    //------------------------------------------------------------------
 
     public void lendBook() {
         Scanner scanner = new Scanner(System.in);
@@ -113,54 +118,6 @@ public class Library {
         System.out.println("Book lent successfully.");
     }
 
-    public void returnBook(int bookId, int memberId) {
-        Scanner scanner = new Scanner(System.in);
-        for (LendingRecord record : lendingRecords) {
-            if (record.getBookId() == bookId && record.getMemberId() == memberId) {
-                Book book = books.get(bookId);
-                book.setAvailable(true);
-                Date returnDate = null;
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                while (returnDate == null) {
-                    System.out.print("Enter Return Date (yyyy-MM-dd): ");
-                    String dueDateStr = scanner.nextLine();
-                    try {
-                        returnDate = sdf.parse(dueDateStr);
-                    } catch (Exception e) {
-                        System.out.println("Invalid date format. Please use yyyy-MM-dd format.");
-                    }
-                }
-                record.setReturnDate(returnDate);
-                if (returnDate.before(record.getDueDate()) || returnDate.equals(record.getDueDate())) {
-                    // Remove the lending record if the return date is before or equal to the due date
-                    lendingRecords.remove(record);}
-                System.out.println("Book returned successfully.");
-                return;
-            }
-        }
-        System.out.println("Book or member not found in lending records.");
-    }
-
-    public void displayBookNames() {
-        System.out.println("Books in the library:");
-        for (Book book : books.values()) {
-            System.out.println(book.getTitle());
-        }
-    }
-
-    public void displayMemberNames() {
-        System.out.println("Registered members:");
-        for (Member member : members.values()) {
-            System.out.println(member.getName());
-        }
-    }
-
-    public void viewLendingInformation() {
-        System.out.println("Lending information:");
-        for (LendingRecord record : lendingRecords) {
-            System.out.println("Book ID: " + record.getBookId() + ", Member ID: " + record.getMemberId());
-        }
-    }
 
     public void displayOverdueBooks() {
         System.out.println("Overdue books:");
@@ -183,6 +140,31 @@ public class Library {
         System.out.println("There are no overdue books.");
         }
     }
+
+    //------------------------------------------------------------------
+
+    public void displayBookNames() {
+        System.out.println("Books in the library:");
+        for (Book book : books.values()) {
+            System.out.println(book.getTitle());
+        }
+    }
+
+    public void displayMemberNames() {
+        System.out.println("Registered members:");
+        for (Member member : members.values()) {
+            System.out.println(member.getName());
+        }
+    }
+
+    public void viewLendingInformation() {
+        System.out.println("Lending information:");
+        for (LendingRecord record : lendingRecords) {
+            System.out.println("Book ID: " + record.getBookId() + ", Member ID: " + record.getMemberId());
+        }
+    }
+
+    //------------------------------------------------------------------
 
     public void searchBookInformation() {
         Scanner scanner = new Scanner(System.in);
@@ -299,5 +281,32 @@ public class Library {
         }
     }
     
+    public void returnBook(int bookId, int memberId) {
+        Scanner scanner = new Scanner(System.in);
+        for (LendingRecord record : lendingRecords) {
+            if (record.getBookId() == bookId && record.getMemberId() == memberId) {
+                Book book = books.get(bookId);
+                book.setAvailable(true);
+                Date returnDate = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                while (returnDate == null) {
+                    System.out.print("Enter Return Date (yyyy-MM-dd): ");
+                    String dueDateStr = scanner.nextLine();
+                    try {
+                        returnDate = sdf.parse(dueDateStr);
+                    } catch (Exception e) {
+                        System.out.println("Invalid date format. Please use yyyy-MM-dd format.");
+                    }
+                }
+                record.setReturnDate(returnDate);
+                if (returnDate.before(record.getDueDate()) || returnDate.equals(record.getDueDate())) {
+                    // Remove the lending record if the return date is before or equal to the due date
+                    lendingRecords.remove(record);}
+                System.out.println("Book returned successfully.");
+                return;
+            }
+        }
+        System.out.println("Book or member not found in lending records.");
+    }
     
 }
