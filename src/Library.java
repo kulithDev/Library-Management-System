@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 public class Library {
     private Map<Integer, Book> books = new HashMap<>();
@@ -176,9 +177,6 @@ public class Library {
                     }
                 }
                 record.setReturnDate(returnDate);
-                if (returnDate.before(record.getDueDate()) || returnDate.equals(record.getDueDate())) {
-                    // Remove the lending record if the return date is before or equal to the due date
-                    lendingRecords.remove(record);}
                 System.out.println("Book returned successfully.");
                 return;
             }
@@ -203,9 +201,10 @@ public class Library {
     }
 
     public void viewLendingInformation() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Lending information:");
         for (LendingRecord record : lendingRecords) {
-            System.out.println("Book ID: " + record.getBookId() + ", Member ID: " + record.getMemberId());
+            System.out.println("Book ID: " + record.getBookId() + " | Member ID: " + record.getMemberId() + " | Checkout Date: "+dateFormat.format(record.getCheckoutDate())+" | Due date: "+dateFormat.format(record.getDueDate()) +" | Returned date: "+(record.getReturnDate() != null ? dateFormat.format(record.getReturnDate()) : "Not returned"));
         }
     }
 
