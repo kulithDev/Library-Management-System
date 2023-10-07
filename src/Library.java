@@ -6,23 +6,36 @@ public class Library {
     private Map<Integer, Member> members = new HashMap<>();
     private List<LendingRecord> lendingRecords = new ArrayList<>();
 
-    public void addBook(int bookId, String title, String author) {
-    try {
-        if (books.containsKey(bookId)) {
-            throw new IllegalArgumentException("Book with the same ID already exists.");
-        }
-        if (title.isEmpty() || author.isEmpty()) {
-            throw new IllegalArgumentException("Title and author must not be empty.");
-        }
+    public void addBook() {
+        Scanner scanner = new Scanner(System.in);
         
-        // Add the book
-        Book book = new Book(bookId, title, author);
-        books.put(bookId, book);
-        System.out.println("Book added Successfully.");
-    } catch (IllegalArgumentException e) {
-        System.err.println("Error: " + e.getMessage());
+        try {
+            System.out.print("Enter Book ID: ");
+            int bookId = scanner.nextInt();
+            
+            if (books.containsKey(bookId)) {
+                System.out.println("Book with the same ID already exists.");
+            } else {
+                scanner.nextLine(); // Consume the newline character
+                System.out.print("Enter Title: ");
+                String title = scanner.nextLine();
+                System.out.print("Enter Author: ");
+                String author = scanner.nextLine();
+                
+                if (title.isEmpty() || author.isEmpty()) {
+                    System.out.println("Title and author must not be empty.");
+                } else {
+                    // Add the book
+                    Book book = new Book(bookId, title, author);
+                    books.put(bookId, book);
+                    System.out.println("Book added successfully.");
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid Book ID.");
+        }
     }
-}
+    
 
 
     public void removeBook(int bookId) {
@@ -34,15 +47,34 @@ public class Library {
         }
     }
 
-    public void registerMember(int memberId, String name) {
-        if (members.containsKey(memberId)) {
-            System.out.println("Member with the same ID already exists.");
-        } else {
-            Member member = new Member(memberId, name);
-            members.put(memberId, member);
-            System.out.println("Member registered successfully.");
+    public void registerMember() {
+    Scanner scanner = new Scanner(System.in);
+    
+        try {
+            System.out.print("Enter Member ID: ");
+            int memberId = scanner.nextInt();
+            
+            if (members.containsKey(memberId)) {
+                System.out.println("Member with the same ID already exists.");
+            } else {
+                scanner.nextLine(); // Consume the newline character
+                System.out.print("Enter Name: ");
+                String name = scanner.nextLine();
+                
+                if (name.isEmpty()) {
+                    System.out.println("Name must not be empty.");
+                } else {
+                    // Register the member
+                    Member member = new Member(memberId, name);
+                    members.put(memberId, member);
+                    System.out.println("Member registered successfully.");
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid Member ID.");
         }
     }
+
 
     public void removeMember(int memberId) {
         if (members.containsKey(memberId)) {
