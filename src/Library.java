@@ -6,6 +6,9 @@ public class Library {
     private Map<Integer, Member> members = new HashMap<>();
     private List<LendingRecord> lendingRecords = new ArrayList<>();
 
+
+    //-------------------------------------------------------------------------
+
     public void addBook() {
         Scanner scanner = new Scanner(System.in);
         
@@ -36,7 +39,6 @@ public class Library {
         }
     }
     
-
 
     public void removeBook(int bookId) {
         if (books.containsKey(bookId)) {
@@ -84,6 +86,8 @@ public class Library {
             System.out.println("Member not found in the records.");
         }
     }
+
+    //-------------------------------------------------------------------------
 
     public void lendBook() {
         Scanner scanner = new Scanner(System.in);
@@ -158,6 +162,10 @@ public class Library {
                     String dueDateStr = scanner.nextLine();
                     try {
                         returnDate = sdf.parse(dueDateStr);
+                        if (returnDate.before(record.getCheckoutDate())) {
+                            System.out.println("Return Date invalid.");
+                            returnDate = null; // Reset dueDate to null
+                        }
                     } catch (Exception e) {
                         System.out.println("Invalid date format. Please use yyyy-MM-dd format.");
                     }
@@ -172,6 +180,8 @@ public class Library {
         }
         System.out.println("Book or member not found in lending records.");
     }
+
+    //-------------------------------------------------------------------------
 
     public void displayBookNames() {
         System.out.println("Books in the library:");
@@ -194,27 +204,7 @@ public class Library {
         }
     }
 
-    public void displayOverdueBooks() {
-        System.out.println("Overdue books:");
-        boolean overdueBooksFound = false;
-        for (LendingRecord record : lendingRecords) {
-            if (record.getReturnDate()!=null) {
-                long daysOverdue = (record.getReturnDate().getTime() - record.getDueDate().getTime())/ (24 * 60 * 60 * 1000);
-                if (daysOverdue > 0) {
-                    double fine = daysOverdue <= 7 ? 50 * daysOverdue : (7 * 50) + ((daysOverdue - 7) * 100);
-                    System.out.println("Book ID: " + record.getBookId() + ", Member ID: " + record.getMemberId()
-                            + ", Days Overdue: " + daysOverdue + ", Fine: Rs. " + fine);
-    
-                    // Set overdueBooksFound to true when overdue books are found
-                    overdueBooksFound = true;
-                }
-            }
-        }
-
-        if (!overdueBooksFound) {
-        System.out.println("There are no overdue books.");
-        }
-    }
+    //-------------------------------------------------------------------------
 
     public void searchBookInformation() {
         Scanner scanner = new Scanner(System.in);
@@ -331,5 +321,27 @@ public class Library {
         }
     }
     
+    public void displayOverdueBooks() {
+        System.out.println("Overdue books:");
+        boolean overdueBooksFound = false;
+        for (LendingRecord record : lendingRecords) {
+            if (record.getReturnDate()!=null) {
+                long daysOverdue = (record.getReturnDate().getTime() - record.getDueDate().getTime())/ (24 * 60 * 60 * 1000);
+                if (daysOverdue > 0) {
+                    double fine = daysOverdue <= 7 ? 50 * daysOverdue : (7 * 50) + ((daysOverdue - 7) * 100);
+                    System.out.println("Book ID: " + record.getBookId() + ", Member ID: " + record.getMemberId()
+                            + ", Days Overdue: " + daysOverdue + ", Fine: Rs. " + fine);
     
+                    // Set overdueBooksFound to true when overdue books are found
+                    overdueBooksFound = true;
+                }
+            }
+        }
+
+        if (!overdueBooksFound) {
+        System.out.println("There are no overdue books.");
+        }
+    }
+
+    //-------------------------------------------------------------------------
 }
