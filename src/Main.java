@@ -28,14 +28,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter Book ID: ");
-                    int bookId = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Enter Book Title: ");
-                    String title = scanner.nextLine();
-                    System.out.print("Enter Author: ");
-                    String author = scanner.nextLine();
-                    library.addBook(bookId, title, author);
+                    library.addBook();
                     break;
                 case 2:
                     System.out.print("Enter Book ID to remove: ");
@@ -43,12 +36,7 @@ public class Main {
                     library.removeBook(removeBookId);
                     break;
                 case 3:
-                    System.out.print("Enter Member ID: ");
-                    int memberId = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Enter Member Name: ");
-                    String memberName = scanner.nextLine();
-                    library.registerMember(memberId, memberName);
+                    library.registerMember();
                     break;
                 case 4:
                     System.out.print("Enter Member ID to remove: ");
