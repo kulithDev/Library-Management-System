@@ -32,4 +32,8 @@ public class LendingRecord {
     public Date getReturnDate() {
         return returnDate;
     }
+
+    public Date getCheckoutDate(){
+        return checkoutDate;
+    }
 }
