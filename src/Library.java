@@ -179,6 +179,28 @@ public class Library {
         System.out.println("Book or member not found in lending records.");
     }
 
+    public void displayOverdueBooks() {
+        System.out.println("Overdue books:");
+        boolean overdueBooksFound = false;
+        for (LendingRecord record : lendingRecords) {
+            if (record.getReturnDate()!=null) {
+                long daysOverdue = (record.getReturnDate().getTime() - record.getDueDate().getTime())/ (24 * 60 * 60 * 1000);
+                if (daysOverdue > 0) {
+                    double fine = daysOverdue <= 7 ? 50 * daysOverdue : (7 * 50) + ((daysOverdue - 7) * 100);
+                    System.out.println("Book ID: " + record.getBookId() + ", Member ID: " + record.getMemberId()
+                            + ", Days Overdue: " + daysOverdue + ", Fine: Rs. " + fine);
+    
+                    // Set overdueBooksFound to true when overdue books are found
+                    overdueBooksFound = true;
+                }
+            }
+        }
+
+        if (!overdueBooksFound) {
+        System.out.println("There are no overdue books.");
+        }
+    }
+
     //-------------------------------------------------------------------------
 
     public void displayBookNames() {
@@ -231,7 +253,8 @@ public class Library {
             case 2:
                 // Search by Title
                 System.out.print("Enter Title: ");
-                String title = scanner.next();
+                scanner.nextLine();
+                String title = scanner.nextLine();
                 boolean titleFound = false;
                 
                 for (Book book : books.values()) {
@@ -249,7 +272,8 @@ public class Library {
             case 3:
                 // Search by Author
                 System.out.print("Enter Author: ");
-                String author = scanner.next();
+                scanner.nextLine();
+                String author = scanner.nextLine();
                 boolean authorFound = false;
                 
                 for (Book book : books.values()) {
@@ -295,7 +319,8 @@ public class Library {
             case 2:
                 // Search by Name
                 System.out.print("Enter Name: ");
-                String name = scanner.next();
+                scanner.nextLine();
+                String name = scanner.nextLine();
                 boolean nameFound = false;
                 
                 for (Member member : members.values()) {
@@ -320,27 +345,5 @@ public class Library {
         }
     }
     
-    public void displayOverdueBooks() {
-        System.out.println("Overdue books:");
-        boolean overdueBooksFound = false;
-        for (LendingRecord record : lendingRecords) {
-            if (record.getReturnDate()!=null) {
-                long daysOverdue = (record.getReturnDate().getTime() - record.getDueDate().getTime())/ (24 * 60 * 60 * 1000);
-                if (daysOverdue > 0) {
-                    double fine = daysOverdue <= 7 ? 50 * daysOverdue : (7 * 50) + ((daysOverdue - 7) * 100);
-                    System.out.println("Book ID: " + record.getBookId() + ", Member ID: " + record.getMemberId()
-                            + ", Days Overdue: " + daysOverdue + ", Fine: Rs. " + fine);
-    
-                    // Set overdueBooksFound to true when overdue books are found
-                    overdueBooksFound = true;
-                }
-            }
-        }
-
-        if (!overdueBooksFound) {
-        System.out.println("There are no overdue books.");
-        }
-    }
-
     //-------------------------------------------------------------------------
 }
